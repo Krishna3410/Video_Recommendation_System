@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Video Recommendations</h1>
+        <form method="GET" action="/feed">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="category_id" class="form-label">Category ID</label>
+                <input type="number" class="form-control" id="category_id" name="category_id">
+            </div>
+            <div class="mb-3">
+                <label for="mood" class="form-label">Mood</label>
+                <input type="text" class="form-control" id="mood" name="mood">
+            </div>
+            <button type="submit" class="btn btn-primary">Get Recommendations</button>
+        </form>
+
+        <div id="recommendations">
+            {% if recommendations %}
+            <h3>Top Recommendations:</h3>
+            <ul class="list-group">
+                {% for rec in recommendations %}
+                <li class="list-group-item">
+                    <strong>{{ rec['title'] }}</strong><br>
+                    <em>Category: {{ rec['category'] }}</em><br>
+                    <strong>Score: </strong>{{ rec['score'] }}<br>
+                    <strong>Source: </strong>{{ rec['source'] }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No recommendations yet. Please submit the form above.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
